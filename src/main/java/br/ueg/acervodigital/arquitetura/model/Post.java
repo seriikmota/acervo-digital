@@ -1,5 +1,6 @@
 package br.ueg.acervodigital.arquitetura.model;
 
+import br.ueg.acervodigitalarquitetura.domain.BaseModel;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -8,15 +9,14 @@ import java.time.LocalDateTime;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
-@Getter
-@Setter
+@Data
 @ToString
 @Entity
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "post")
-public class Post implements GenericModel<Long>{
+public class Post implements BaseModel<Long> {
     public final static String SEQUENCE_NAME = "post_sequence";
 
     @Id
