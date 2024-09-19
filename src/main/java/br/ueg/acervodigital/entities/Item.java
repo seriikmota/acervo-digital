@@ -1,4 +1,4 @@
-package br.ueg.acervodigital.arquitetura.model;
+package br.ueg.acervodigital.entities;
 
 import br.ueg.acervodigitalarquitetura.domain.BaseModel;
 import jakarta.persistence.*;
