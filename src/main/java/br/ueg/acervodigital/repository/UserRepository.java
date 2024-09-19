@@ -1,4 +1,7 @@
 package br.ueg.acervodigital.repository;
 
-public interface UserRepository {
+import br.ueg.acervodigital.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 }
