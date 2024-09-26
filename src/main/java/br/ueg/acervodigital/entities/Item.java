@@ -1,6 +1,7 @@
 package br.ueg.acervodigital.entities;
 
-import br.ueg.acervodigitalarquitetura.domain.BaseModel;
+import br.ueg.acervodigitalarquitetura.domain.GenericModel;
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -16,7 +17,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "item")
-public class Item implements BaseModel<Long> {
+public class Item implements GenericModel<Long> {
     public final static String SEQUENCE_NAME = "item_sequence";
 
     @Id
