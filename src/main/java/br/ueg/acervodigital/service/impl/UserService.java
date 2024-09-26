@@ -4,22 +4,21 @@ import br.ueg.acervodigital.dto.list.UserListDTO;
 import br.ueg.acervodigital.dto.request.UserRequestDTO;
 import br.ueg.acervodigital.dto.response.UserResponseDTO;
 import br.ueg.acervodigital.entities.User;
+import br.ueg.acervodigital.enums.ApiErrorEnum;
+import br.ueg.acervodigital.exception.BusinessRuleException;
 import br.ueg.acervodigital.mapper.UserMapper;
 import br.ueg.acervodigital.repository.UserRepository;
 import br.ueg.acervodigital.service.IUserService;
-import br.ueg.acervodigitalarquitetura.enums.ErrorEnum;
-import br.ueg.acervodigitalarquitetura.exception.BusinessLogicException;
-import br.ueg.acervodigitalarquitetura.service.impl.AbstractCrudService;
+import br.ueg.acervodigitalarquitetura.service.impl.AbstractService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService extends AbstractCrudService<UserRequestDTO, UserResponseDTO, UserListDTO, User, UserRepository, UserMapper, Long>
+public class UserService extends AbstractService<UserRequestDTO, UserResponseDTO, UserListDTO, User, UserRepository, UserMapper, Long>
         implements IUserService {
 
     @Override
     protected void prepareToCreate(User data) {
-        data.setPassword(encryptPassword(data.getPassword()));
     }
 
     @Override
@@ -38,14 +37,27 @@ public class UserService extends AbstractCrudService<UserRequestDTO, UserRespons
     }
 
     @Override
-    protected void validatePassword(UserRequestDTO dtoCreate) {
-        if (dtoCreate.getPassword() == null)
-            throw new BusinessLogicException(ErrorEnum.PASSWORD_NOT_ENTIRED);
-        if (dtoCreate.getConfirmPassword() == null)
-            throw new BusinessLogicException(ErrorEnum.CONFIRM_PASSWORD_NOT_ENTIRED);
-        if (!dtoCreate.getPassword().equals(dtoCreate.getConfirmPassword()))
-            throw new BusinessLogicException(ErrorEnum.PASSWORD_DIFERENT);
-        if (dtoCreate.getPassword().trim().length() < 8)
-            throw new BusinessLogicException(ErrorEnum.PASSWORD_INVALID);
+    protected void prepareToMapCreate(UserRequestDTO dto) {
+        if (dto.getPassword() == null)
+            throw new BusinessRuleException(ApiErrorEnum.PASSWORD_NOT_ENTIRED);
+        if (dto.getConfirmPassword() == null)
+            throw new BusinessRuleException(ApiErrorEnum.CONFIRM_PASSWORD_NOT_ENTIRED);
+        if (!dto.getPassword().equals(dto.getConfirmPassword()))
+            throw new BusinessRuleException(ApiErrorEnum.PASSWORD_DIFERENT);
+        if (dto.getPassword().trim().length() < 8)
+            throw new BusinessRuleException(ApiErrorEnum.PASSWORD_INVALID);
+        dto.setPassword(encryptPassword(dto.getPassword()));
+    }
+    @Override
+    protected void prepareToMapUpdate(UserRequestDTO dto) {
+        if (dto.getPassword() != null) {
+            if (dto.getConfirmPassword() == null)
+                throw new BusinessRuleException(ApiErrorEnum.CONFIRM_PASSWORD_NOT_ENTIRED);
+            if (!dto.getPassword().equals(dto.getConfirmPassword()))
+                throw new BusinessRuleException(ApiErrorEnum.PASSWORD_DIFERENT);
+            if (dto.getPassword().trim().length() < 8)
+                throw new BusinessRuleException(ApiErrorEnum.PASSWORD_INVALID);
+            dto.setPassword(encryptPassword(dto.getPassword()));
+        }
     }
 }
