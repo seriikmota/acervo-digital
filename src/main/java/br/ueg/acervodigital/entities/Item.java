@@ -1,6 +1,7 @@
 package br.ueg.acervodigital.entities;
 
 import br.ueg.acervodigitalarquitetura.domain.BaseModel;
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
