@@ -4,14 +4,14 @@ import br.ueg.acervodigital.enums.ApiErrorEnum;
 import lombok.Getter;
 
 @Getter
-public class BusinessRoleException extends RuntimeException {
+public class BusinessRuleException extends RuntimeException {
     private final ApiErrorEnum error;
 
-    public BusinessRoleException(String message){
+    public BusinessRuleException(String message){
         super(message);
         this.error = ApiErrorEnum.GENERAL;
     }
-    public BusinessRoleException(ApiErrorEnum err){
+    public BusinessRuleException(ApiErrorEnum err){
         super(err.getMessage());
         this.error = err;
     }

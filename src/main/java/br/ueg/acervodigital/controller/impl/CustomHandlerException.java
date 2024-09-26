@@ -1,6 +1,6 @@
 package br.ueg.acervodigital.controller.impl;
 
-import br.ueg.acervodigital.exception.BusinessRoleException;
+import br.ueg.acervodigital.exception.BusinessRuleException;
 import br.ueg.acervodigitalarquitetura.exception.BusinessLogicException;
 import br.ueg.acervodigitalarquitetura.exception.DataException;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,8 @@ public class CustomHandlerException {
         return ResponseEntity.status(ex.getError().getId()).body(ex.getMessage());
     }
 
-    @ExceptionHandler(BusinessRoleException.class)
-    public ResponseEntity<String> handleBusinessRoleException(BusinessRoleException ex) {
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<String> handleBusinessRuleException(BusinessRuleException ex) {
         return ResponseEntity.status(ex.getError().getId()).body(ex.getMessage());
     }
 
