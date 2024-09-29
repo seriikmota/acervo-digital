@@ -42,4 +42,7 @@ public class User implements GenericModel<Long> {
     @Column(name = "function")
     private String function;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
 }
