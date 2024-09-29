@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class ItemMandatoryFields implements IValidations<Item> {
     @Override
     public void validate(Item data, ValidationActionsEnum action) {
-        if (data.getNumber_code() == null) {
+        if (data.getNumberCode() == null) {
             throw new BusinessRuleException("O código do item é obrigatório!");
         }
         if (data.getName() == null) {
@@ -20,7 +20,7 @@ public class ItemMandatoryFields implements IValidations<Item> {
         if (data.getCollector() == null) {
             throw new BusinessRuleException("O nome de quem coletou o item é obrigatório!");
         }
-        if (data.getColleaction_year() == null) {
+        if (data.getColleactionYear() == null) {
             throw new BusinessRuleException("O ano que realizou-se a coleta do item é obrigatório!");
         }
     }
