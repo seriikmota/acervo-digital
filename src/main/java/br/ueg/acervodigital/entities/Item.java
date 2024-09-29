@@ -48,7 +48,7 @@ public class Item implements GenericModel<Long> {
     @Column(name = "collection")
     private String collection;
 
-    @Column(name = "provenance")
+    @Column(name = "provenance") // procedência
     private String provenance;
 
     @Column(name = "location")
@@ -72,6 +72,6 @@ public class Item implements GenericModel<Long> {
     @Column(name = "taxonomy")
     private String taxonomy;
 
-    @Column(name = "heritage_date")
+    @Column(name = "heritage_date") // data de tombamento
     private LocalDate heritage_date;
 }
