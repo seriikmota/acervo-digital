@@ -39,7 +39,7 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
     public List<Item> getByDescription(String description) {
         List<Item> temp = repository.findByNameContaining(description);
         if(temp.isEmpty()){
-            throw new DataException("Modelo não encontrado");
+            throw new DataException("Item do acervo não encontrado");
         }
         return temp;
     }
