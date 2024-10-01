@@ -33,6 +33,7 @@ public class ItemController
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     protected ItemService service;
+    @Autowired
     protected ItemMapper mapper;
 
     @GetMapping(path = "/search/{description}")
