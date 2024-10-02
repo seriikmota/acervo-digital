@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -37,19 +38,19 @@ public class Item implements GenericModel<Long> {
     private User user;
 
     @Column(name = "number_code")
-    private String number_code;
+    private String numberCode;
 
     @Column(name = "collector")
     private String collector;
 
     @Column(name = "colleaction_year")
-    private LocalDate colleaction_year;
+    private LocalDate colleactionYear;
 
     @Column(name = "collection")
     private String collection;
 
     @Column(name = "provenance")
-    private String provenance;
+    private String provenance; // Procedência
 
     @Column(name = "location")
     private String location;
@@ -58,7 +59,7 @@ public class Item implements GenericModel<Long> {
     private String period;
 
     @Column(name = "register_date")
-    private String register_date;
+    private LocalDateTime registerDate;
 
     @Column(name = "status")
     private Integer status;
@@ -73,5 +74,5 @@ public class Item implements GenericModel<Long> {
     private String taxonomy;
 
     @Column(name = "heritage_date")
-    private LocalDate heritage_date;
+    private LocalDate heritageDate; // Data do Tombamento
 }
