@@ -5,6 +5,9 @@ import br.ueg.acervodigital.dto.list.UserListDTO;
 import br.ueg.acervodigital.dto.request.UserRequestDTO;
 import br.ueg.acervodigital.dto.response.UserResponseDTO;
 import br.ueg.acervodigital.service.impl.UserService;
+import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import br.ueg.acervodigitalarquitetura.controller.impl.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("${api.version}/user")
-@CrossOrigin(origins = "http://localhost:4200")
-public class UserController extends AbstractController<UserRequestDTO, UserResponseDTO, UserListDTO, UserService, Long>
+public class UserController extends AbstractCrudController<UserRequestDTO, UserResponseDTO, UserListDTO, UserService, Long>
         implements IUserController {
 
     @Autowired

@@ -7,7 +7,7 @@ import br.ueg.acervodigital.dto.response.ItemResponseDTO;
 import br.ueg.acervodigital.entities.Item;
 import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.service.impl.ItemService;
-import br.ueg.acervodigitalarquitetura.controller.impl.AbstractController;
+import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudController;
 import br.ueg.acervodigitalarquitetura.mapper.GenericMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("${api.version}/item")
-@CrossOrigin(origins = "http://localhost:4200")
-public class ItemController
-        extends AbstractController<
-            ItemRequestDTO,
-            ItemResponseDTO,
-            ItemListDTO,
-            ItemService,
-            Long>
+public class ItemController extends AbstractCrudController<ItemRequestDTO, ItemResponseDTO, ItemListDTO, ItemService, Long>
         implements IItemController {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
