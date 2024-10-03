@@ -33,6 +33,9 @@ public class User implements GenericModel<Long> {
     @Column(name = "name",  nullable = false)
     private String name;
 
+    @Column(name = "login")
+    private String login;
+
     @Column(name = "email")
     private String email;
 
