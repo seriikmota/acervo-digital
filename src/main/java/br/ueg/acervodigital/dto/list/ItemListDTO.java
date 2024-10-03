@@ -15,16 +15,17 @@ import java.time.LocalDate;
 public class ItemListDTO {
     private Long id;
     private User user;
-    private String number_code;
+    private String numberCode;
     private String collector;
-    private LocalDate colleaction_year;
+    private LocalDate colleactionYear;
     private String collection;
     private String provenance;
     private String location;
     private String period;
-    private String register_date;
+    private String registerDate;
     private Integer status;
     private Integer approval;
     private String name;
     private String taxonomy;
-    private LocalDate heritage_date;}
+    private LocalDate heritageDate;
+}
