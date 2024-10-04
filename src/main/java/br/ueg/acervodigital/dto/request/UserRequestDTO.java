@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 public class UserRequestDTO {
     private Long id;
     private String name;
+    private String login;
     private String email;
     private String password;
     private String confirmPassword;
