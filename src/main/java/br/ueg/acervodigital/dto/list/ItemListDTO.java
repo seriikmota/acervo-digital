@@ -22,7 +22,7 @@ public class ItemListDTO {
     private String provenance;
     private String location;
     private String period;
-    private String registerDate;
+    private LocalDate registerDate;
     private Integer status;
     private Integer approval;
     private String name;
