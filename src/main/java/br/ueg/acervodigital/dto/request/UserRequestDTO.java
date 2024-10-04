@@ -17,4 +17,5 @@ public class UserRequestDTO {
     private String password;
     private String confirmPassword;
     private String function;
+    private boolean enabled;
 }
