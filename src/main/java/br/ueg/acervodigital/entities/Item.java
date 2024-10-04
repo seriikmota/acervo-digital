@@ -59,7 +59,7 @@ public class Item implements GenericModel<Long> {
     private String period;
 
     @Column(name = "register_date")
-    private LocalDateTime registerDate;
+    private LocalDate registerDate;
 
     @Column(name = "status")
     private Integer status;
