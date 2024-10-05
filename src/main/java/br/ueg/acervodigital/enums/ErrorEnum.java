@@ -3,7 +3,7 @@ package br.ueg.acervodigital.enums;
 import lombok.Getter;
 
 @Getter
-public enum ApiErrorEnum {
+public enum ErrorEnum {
     GENERAL(400, "Erro desconhecido."),
     CONFIRM_PASSWORD_NOT_ENTIRED(400, "Confirmação de senha não informada!"),
     PASSWORD_NOT_ENTIRED(400, "Senha não informada!"),
@@ -13,7 +13,7 @@ public enum ApiErrorEnum {
     private final Integer id;
     private final String message;
 
-    ApiErrorEnum(Integer id, String message){
+    ErrorEnum(Integer id, String message){
         this.id = id;
         this.message = message;
     }

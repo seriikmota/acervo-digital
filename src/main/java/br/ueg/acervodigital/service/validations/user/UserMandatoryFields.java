@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 public class UserMandatoryFields implements IValidations<User> {
     @Override
     public void validate(User data, ValidationActionsEnum action) {
-        if (data.getName() == null) {
+        if (data.getName() == null || data.getName().isEmpty()) {
             throw new BusinessRuleException("O nome do usuário é obrigatório!");
         }
-        if (data.getEmail() == null) {
+        if (data.getEmail() == null || data.getEmail().isEmpty()) {
             throw new BusinessRuleException("O email do usuário é obrigatório!");
         }
     }

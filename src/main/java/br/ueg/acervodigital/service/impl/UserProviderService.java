@@ -3,8 +3,8 @@ package br.ueg.acervodigital.service.impl;
 import br.ueg.acervodigital.entities.User;
 import br.ueg.acervodigital.repository.UserRepository;
 import br.ueg.acervodigitalarquitetura.dto.CredentialDTO;
-import br.ueg.acervodigitalarquitetura.enums.ErrorEnum;
-import br.ueg.acervodigitalarquitetura.exception.BusinessLogicException;
+import br.ueg.acervodigitalarquitetura.enums.ApiErrorEnum;
+import br.ueg.acervodigitalarquitetura.exception.BusinessException;
 import br.ueg.acervodigitalarquitetura.service.IUserProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,14 +40,14 @@ public class UserProviderService implements IUserProviderService {
     @Override
     public CredentialDTO getCredentialByLogin(String login) {
         User user = repository.findByLogin(login);
-        if (user == null) throw new BusinessLogicException(ErrorEnum.LOGIN_INVALID);
+        if (user == null) throw new BusinessException(ApiErrorEnum.LOGIN_INVALID);
         return getCredential(user);
     }
 
     @Override
     public CredentialDTO getCredentialByEmail(String email) {
         User user = repository.findByEmail(email);
-        if (user == null) throw new BusinessLogicException(ErrorEnum.LOGIN_INVALID);
+        if (user == null) throw new BusinessException(ApiErrorEnum.LOGIN_INVALID);
         return getCredential(user);
     }
 

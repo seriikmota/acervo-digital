@@ -7,6 +7,7 @@ import br.ueg.acervodigital.entities.Item;
 import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.repository.ItemRepository;
 import br.ueg.acervodigital.service.IItemService;
+import br.ueg.acervodigitalarquitetura.enums.ApiErrorEnum;
 import br.ueg.acervodigitalarquitetura.exception.DataException;
 import br.ueg.acervodigitalarquitetura.service.impl.AbstractService;
 
@@ -39,7 +40,7 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
     public List<Item> getByDescription(String description) {
         List<Item> temp = repository.findByNameContaining(description);
         if(temp.isEmpty()){
-            throw new DataException("Item do acervo não encontrado");
+            throw new DataException(ApiErrorEnum.NOT_FOUND);
         }
         return temp;
     }
