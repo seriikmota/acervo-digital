@@ -4,11 +4,14 @@ import br.ueg.acervodigital.dto.list.ItemListDTO;
 import br.ueg.acervodigital.dto.request.ItemRequestDTO;
 import br.ueg.acervodigital.dto.response.ItemResponseDTO;
 import br.ueg.acervodigital.entities.Item;
+import br.ueg.acervodigital.entities.User;
 import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.repository.ItemRepository;
 import br.ueg.acervodigital.service.IItemService;
+import br.ueg.acervodigitalarquitetura.dto.CredentialDTO;
 import br.ueg.acervodigitalarquitetura.enums.ApiErrorEnum;
 import br.ueg.acervodigitalarquitetura.exception.DataException;
+import br.ueg.acervodigitalarquitetura.security.impl.CredentialProvider;
 import br.ueg.acervodigitalarquitetura.service.impl.AbstractService;
 
 import org.springframework.stereotype.Service;
@@ -25,6 +28,9 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
 
     @Override
     protected void prepareToCreate(Item data) {
+        User user = new User();
+        user.setId(((CredentialDTO) CredentialProvider.newInstance().getCurrentInstance()).getId());
+        data.setUser(user);
     }
 
     @Override

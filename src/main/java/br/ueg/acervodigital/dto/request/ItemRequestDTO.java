@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ItemRequestDTO {
     private Long id;
-    private Long userId;
     private String numberCode;
     private String collector;
     private LocalDate colleactionYear;
