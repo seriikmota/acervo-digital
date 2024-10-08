@@ -1,7 +1,6 @@
 package br.ueg.acervodigital.service.validations.item;
 
 import br.ueg.acervodigital.entities.Item;
-import br.ueg.acervodigital.entities.User;
 import br.ueg.acervodigital.exception.BusinessRuleException;
 import br.ueg.acervodigitalarquitetura.enums.ValidationActionsEnum;
 import br.ueg.acervodigitalarquitetura.validation.IValidations;
@@ -14,7 +13,7 @@ public class ItemMandatoryFields implements IValidations<Item> {
 //        if (data.getNumberCode() == null) {
 //            throw new BusinessRuleException("O código do item é obrigatório!");
 //        }
-        if (data.getName() == null) {
+        if (data.getName() == null || data.getName().isEmpty()) {
             throw new BusinessRuleException("A descrição do item é obrigatória!");
         }
 //        if (data.getCollector() == null) {

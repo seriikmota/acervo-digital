@@ -1,14 +1,17 @@
 package br.ueg.acervodigital.service.impl;
 
 import br.ueg.acervodigital.entities.User;
+import br.ueg.acervodigital.entities.UserLog;
+import br.ueg.acervodigital.repository.UserLogRepository;
 import br.ueg.acervodigital.repository.UserRepository;
 import br.ueg.acervodigitalarquitetura.dto.CredentialDTO;
-import br.ueg.acervodigitalarquitetura.enums.ErrorEnum;
-import br.ueg.acervodigitalarquitetura.exception.BusinessLogicException;
+import br.ueg.acervodigitalarquitetura.enums.ApiErrorEnum;
+import br.ueg.acervodigitalarquitetura.exception.BusinessException;
 import br.ueg.acervodigitalarquitetura.service.IUserProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +21,9 @@ public class UserProviderService implements IUserProviderService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private UserLogRepository userLogRepository;
 
     private CredentialDTO getCredential(User user) {
         List<String> roles = new ArrayList<>();
@@ -40,14 +46,14 @@ public class UserProviderService implements IUserProviderService {
     @Override
     public CredentialDTO getCredentialByLogin(String login) {
         User user = repository.findByLogin(login);
-        if (user == null) throw new BusinessLogicException(ErrorEnum.LOGIN_INVALID);
+        if (user == null) throw new BusinessException(ApiErrorEnum.LOGIN_INVALID);
         return getCredential(user);
     }
 
     @Override
     public CredentialDTO getCredentialByEmail(String email) {
         User user = repository.findByEmail(email);
-        if (user == null) throw new BusinessLogicException(ErrorEnum.LOGIN_INVALID);
+        if (user == null) throw new BusinessException(ApiErrorEnum.LOGIN_INVALID);
         return getCredential(user);
     }
 
@@ -77,5 +83,15 @@ public class UserProviderService implements IUserProviderService {
                 "ROLE_ITEM_UPDATE",
                 "ROLE_ITEM_DELETE"
         );
+    }
+
+    @Override
+    public void recordLog(CredentialDTO credentialDTO, String action) {
+        UserLog log = UserLog.builder()
+                .login(credentialDTO.getLogin())
+                .name(credentialDTO.getName())
+                .date(LocalDateTime.now())
+                .action(action).build();
+        userLogRepository.save(log);
     }
 }

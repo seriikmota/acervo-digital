@@ -57,7 +57,7 @@ public class AppStartupRunner implements ApplicationRunner {
                 .numberCode("00001")
                 .period("Pré-escolar")
                 .provenance("Onde o Judas perdeu as meias")
-                .registerDate(LocalDateTime.now().minusDays(5))
+                .registerDate(LocalDate.now())
                 .status(1)
                 .user(user)
                 .build();

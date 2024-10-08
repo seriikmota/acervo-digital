@@ -12,6 +12,8 @@ import lombok.experimental.SuperBuilder;
 public class UserResponseDTO {
     private Long id;
     private String name;
+    private String login;
     private String email;
     private String function;
+    private boolean enabled;
 }

@@ -1,6 +1,5 @@
 package br.ueg.acervodigital.dto.list;
 
-import br.ueg.acervodigital.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ItemListDTO {
     private Long id;
-    private User user;
+    private UserListDTO user;
     private String numberCode;
     private String collector;
     private LocalDate colleactionYear;
@@ -22,7 +21,7 @@ public class ItemListDTO {
     private String provenance;
     private String location;
     private String period;
-    private String registerDate;
+    private LocalDate registerDate;
     private Integer status;
     private Integer approval;
     private String name;
