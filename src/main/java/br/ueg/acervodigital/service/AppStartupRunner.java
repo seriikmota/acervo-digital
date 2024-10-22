@@ -40,14 +40,18 @@ public class AppStartupRunner implements ApplicationRunner {
         User user = null;
         user = User.builder()
                 .id(1L)
-                .name("Fulano de Tal")
-                .email("fulano@email.com")
-                .password("$2a$10$C3qnT9kIFyyrAls.OS6NoOfpb9ny5.6hqHxIBPeL/w/xX4bv.feMy") // Senha123
+                .email("teste@gmail.com")
+                .enabled(Boolean.TRUE)
+                .function("Admin")
+                .login("admin")
+                .name("Administrador")
+                .password("$2y$10$1MgdNcIduZBhvlTym.PKje0nDX54UVS28jTa2U3lB3JvrqAj4fAdq") // admin
                 .build();
-//        this.userRepository.save(user);
+        this.userRepository.save(user);
+//                .password("$2a$10$C3qnT9kIFyyrAls.OS6NoOfpb9ny5.6hqHxIBPeL/w/xX4bv.feMy") // Senha123
         Item item = null;
         item = Item.builder()
-                .approval(1)
+                .approval(Boolean.FALSE)
                 .name("Osso do pé da cobra")
                 .collector("José das Couves")
                 .colleactionYear(LocalDate.parse("1980-01-01"))
