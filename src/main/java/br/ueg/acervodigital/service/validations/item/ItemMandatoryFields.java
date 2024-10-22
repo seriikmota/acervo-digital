@@ -10,17 +10,13 @@ import org.springframework.stereotype.Component;
 public class ItemMandatoryFields implements IValidations<Item> {
     @Override
     public void validate(Item data, ValidationActionsEnum action) {
-//        if (data.getNumberCode() == null) {
-//            throw new BusinessRuleException("O código do item é obrigatório!");
-//        }
         if (data.getName() == null || data.getName().isEmpty()) {
             throw new BusinessRuleException("A descrição do item é obrigatória!");
         }
-//        if (data.getCollector() == null) {
-//            throw new BusinessRuleException("O nome de quem coletou o item é obrigatório!");
-//        }
-//        if (data.getColleactionYear() == null) {
-//            throw new BusinessRuleException("O ano que realizou-se a coleta do item é obrigatório!");
-//        }
+        if (!(data.getApproval() == null)) {
+            if (data.getApproval() == Boolean.TRUE && data.getItemImages().isEmpty()) {
+                throw new BusinessRuleException("A imagem do item de acervo é obrigatória!");
+            }
+        }
     }
 }
