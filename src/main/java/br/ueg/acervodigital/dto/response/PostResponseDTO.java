@@ -1,8 +1,7 @@
 
 package br.ueg.acervodigital.dto.response;
 
-import br.ueg.acervodigital.entities.PostImages;
-import br.ueg.acervodigital.entities.User;
+import br.ueg.acervodigital.dto.ImageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 public class PostResponseDTO {
     private Long id;
-    private User user;
+    private UserResponseDTO user;
     private String title;
     private String subtitle;
     private String content;
-    private String approval;
-    private LocalDateTime publication_date;
+    private Boolean approval;
+    private LocalDateTime publicationDate;
     private String tag;
-    private List<PostImages> postImages;
+    private List<ImageDTO> image;
 }

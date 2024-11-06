@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Arrays;
+
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Data
@@ -16,9 +18,9 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "postimages")
-public class PostImages implements GenericModel<Long> {
-    public final static String SEQUENCE_NAME = "postimages_sequence";
+@Table(name = "item_images")
+public class ItemImage implements GenericModel<Long> {
+    public final static String SEQUENCE_NAME = "itemimages_sequence";
 
     @Id
     @SequenceGenerator(
@@ -34,8 +36,8 @@ public class PostImages implements GenericModel<Long> {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_post_id"))
-    private Post post_id;
+    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_item_id"))
+    private Item item;
 
     @Lob
     @Column(name = "image")

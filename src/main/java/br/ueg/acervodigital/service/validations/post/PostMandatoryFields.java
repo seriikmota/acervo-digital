@@ -20,7 +20,7 @@ public class PostMandatoryFields implements IValidations<Post> {
             throw new BusinessRuleException("O conteúdo da postagem é obrigatório!");
         }
         if (!(data.getApproval() == null)) {
-            if (data.getApproval() == Boolean.TRUE && data.getPostImages().isEmpty()) {
+            if (data.getApproval() == Boolean.TRUE && data.getImages().isEmpty()) {
                 throw new BusinessRuleException("A imagem da postagem é obrigatória!");
             }
         }

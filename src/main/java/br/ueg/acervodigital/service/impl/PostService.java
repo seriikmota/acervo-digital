@@ -4,6 +4,7 @@ import br.ueg.acervodigital.dto.list.PostListDTO;
 import br.ueg.acervodigital.dto.request.PostRequestDTO;
 import br.ueg.acervodigital.dto.response.PostResponseDTO;
 import br.ueg.acervodigital.entities.Post;
+import br.ueg.acervodigital.entities.PostImage;
 import br.ueg.acervodigital.entities.User;
 import br.ueg.acervodigital.mapper.PostMapper;
 import br.ueg.acervodigital.repository.PostRepository;
@@ -16,6 +17,7 @@ import br.ueg.acervodigitalarquitetura.service.impl.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,19 +29,26 @@ public class PostService extends AbstractService<PostRequestDTO, PostResponseDTO
 
     @Override
     protected void prepareToCreate(Post data) {
+        setUserAndPublicationDate(data);
+    }
+
+    @Override
+    protected void prepareToUpdate(Post data) {
+        setUserAndPublicationDate(data);
+    }
+
+    @Override
+    protected void prepareToDelete(Post data) {
+    }
+
+    protected void setUserAndPublicationDate(Post data) {
         User user = new User();
         user.setId(((CredentialDTO) CredentialProvider.newInstance().getCurrentInstance()).getId());
         data.setUser(user);
-    }
-
-    @Override
-    protected void prepareToUpdate(Post dataDB) {
-
-    }
-
-    @Override
-    protected void prepareToDelete(Post dataDB) {
-
+        for (PostImage image : data.getImages()) {
+            image.setPost(data);
+        }
+        data.setPublicationDate(LocalDateTime.now());
     }
 
     public List<Post> getByTag(String tag) {

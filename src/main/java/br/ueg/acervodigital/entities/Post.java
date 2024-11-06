@@ -50,13 +50,15 @@ public class Post implements GenericModel<Long> {
     private Boolean approval;
 
     @Column(name = "publication_date")
-    private LocalDateTime publication_date;
+    private LocalDateTime publicationDate;
 
     @Column(name = "tag")
     private String tag;
 
     @OneToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<PostImages> postImages;
+            orphanRemoval = true,
+            mappedBy = "post"
+    )
+    private List<PostImage> images;
 }

@@ -6,7 +6,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
@@ -79,6 +78,7 @@ public class Item implements GenericModel<Long> {
 
     @OneToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<ItemImages> itemImages;
+            orphanRemoval = true,
+            mappedBy = "item")
+    private List<ItemImage> itemImages;
 }

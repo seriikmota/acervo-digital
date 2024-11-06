@@ -16,9 +16,9 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "itemimages")
-public class ItemImages implements GenericModel<Long> {
-    public final static String SEQUENCE_NAME = "itemimages_sequence";
+@Table(name = "post_images")
+public class PostImage implements GenericModel<Long> {
+    public final static String SEQUENCE_NAME = "postimages_sequence";
 
     @Id
     @SequenceGenerator(
@@ -34,8 +34,8 @@ public class ItemImages implements GenericModel<Long> {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_item_id"))
-    private Item item_id;
+    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_post_id"))
+    private Post post;
 
     @Lob
     @Column(name = "image")

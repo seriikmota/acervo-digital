@@ -29,6 +29,7 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
     private UserRepository userRepository;
 
     public void initDados() {

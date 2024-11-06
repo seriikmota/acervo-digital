@@ -1,6 +1,6 @@
 package br.ueg.acervodigital.dto.request;
 
-import br.ueg.acervodigital.entities.ItemImages;
+import br.ueg.acervodigital.dto.list.ItemListDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,5 +28,5 @@ public class ItemRequestDTO {
     private String name;
     private String taxonomy;
     private LocalDate heritageDate;
-    private List<ItemImages> itemImages;
+    private List<ItemListDTO> image;
 }
