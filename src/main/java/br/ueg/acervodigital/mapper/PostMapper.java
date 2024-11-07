@@ -16,9 +16,12 @@ import java.util.List;
         uses = {PostImageMapper.class}
 )
 public interface PostMapper extends GenericMapper<PostRequestDTO, PostResponseDTO, PostListDTO, Post, Long> {
-    @Named(value = "toDTOList") // para identificar o nome desse método pelo mapstruct
+    @Mapping(source = "files", target = "images")
+    Post toModel(PostRequestDTO postRequestDTO);
+
+    @Named(value = "toDTOList")
     PostListDTO toDTOList(Post model);
 
-    @IterableMapping(qualifiedByName = "toDTOList") // para orientar qual método utilizar no caso de vários target=source;
+    @IterableMapping(qualifiedByName = "toDTOList")
     List<PostListDTO> fromModelToDTOList(List<Post> posts);
 }

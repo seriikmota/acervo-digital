@@ -23,5 +23,5 @@ public class PostResponseDTO {
     private Boolean approval;
     private LocalDateTime publicationDate;
     private String tag;
-    private List<ImageDTO> image;
+    private List<ImageDTO> images;
 }

@@ -1,5 +1,7 @@
 package br.ueg.acervodigital.dto.request;
 
+import br.ueg.acervodigitalarquitetura.dto.DTOFile;
+import br.ueg.acervodigitalarquitetura.dto.FileDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostRequestDTO {
+public class PostRequestDTO implements DTOFile {
     private Long id;
     private String title;
     private String subtitle;
@@ -20,5 +22,5 @@ public class PostRequestDTO {
     private Boolean approval;
     private LocalDateTime publicationDate;
     private String tag;
-    private List<ImageRequestDTO> images;
+    private List<FileDTO> files;
 }

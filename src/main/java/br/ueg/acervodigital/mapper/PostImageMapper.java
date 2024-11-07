@@ -1,9 +1,8 @@
 package br.ueg.acervodigital.mapper;
 
 import br.ueg.acervodigital.dto.ImageDTO;
-import br.ueg.acervodigital.dto.request.ImageRequestDTO;
 import br.ueg.acervodigital.entities.PostImage;
-import br.ueg.acervodigitalarquitetura.mapper.GenericMapper;
+import br.ueg.acervodigitalarquitetura.dto.FileDTO;
 import org.mapstruct.*;
 
 import java.util.Base64;
@@ -14,7 +13,9 @@ import java.util.List;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
-public interface PostImageMapper extends GenericMapper<ImageRequestDTO, ImageRequestDTO, ImageDTO, PostImage, Long> {
+public interface PostImageMapper {
+    @Mapping(source = "file", target = "image")
+    PostImage toModel(FileDTO fileDTO);
 
     @Named(value = "toDTOList")
     default ImageDTO toDTOList(PostImage model) {
