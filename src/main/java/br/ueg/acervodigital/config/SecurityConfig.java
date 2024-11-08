@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -24,11 +25,14 @@ public class SecurityConfig extends ApiSecurityConfig {
 
     @Override
     protected List<String> getCustomFreeAccess() {
-        return List.of();
+        List<String> urls = new ArrayList<>();
+        urls.add(apiBase.concat("/post/list"));
+        urls.add(apiBase.concat("/item/list"));
+        return urls;
     }
 
     @Override
     protected List<String> getCustomFreeAccessGet() {
-        return List.of(apiBase.concat("/user"));
+        return List.of();
     }
 }

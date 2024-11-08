@@ -5,6 +5,7 @@ import br.ueg.acervodigital.dto.list.ItemListDTO;
 import br.ueg.acervodigital.dto.request.ItemRequestDTO;
 import br.ueg.acervodigital.dto.response.ItemResponseDTO;
 import br.ueg.acervodigital.entities.Item;
+import br.ueg.acervodigital.entities.ItemImage;
 import br.ueg.acervodigital.entities.User;
 import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.repository.ItemRepository;
@@ -41,18 +42,17 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
 
     @Override
     protected void prepareToCreate(Item data) {
-        User user = new User();
-        user.setId(((CredentialDTO) CredentialProvider.newInstance().getCurrentInstance()).getId());
-        data.setUser(user);
+        setUserCreate(data);
+        updateItemImages(data);
     }
 
     @Override
-    protected void prepareToUpdate(Item dataDB) {
-
+    protected void prepareToUpdate(Item data) {
+        updateItemImages(data);
     }
 
     @Override
-    protected void prepareToDelete(Item dataDB) {
+    protected void prepareToDelete(Item data) {
 
     }
 
@@ -62,6 +62,20 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
             throw new DataException(ApiErrorEnum.NOT_FOUND);
         }
         return temp;
+    }
+
+    private void setUserCreate(Item data) {
+        User user = new User();
+        user.setId(((CredentialDTO) CredentialProvider.newInstance().getCurrentInstance()).getId());
+        data.setUser(user);
+    }
+
+    public void updateItemImages(Item data) {
+        if (data.getImages() != null) {
+            for (ItemImage image : data.getImages()) {
+                image.setItem(data);
+            }
+        }
     }
 
     @Override

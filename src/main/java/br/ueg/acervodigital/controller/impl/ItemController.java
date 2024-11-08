@@ -4,11 +4,9 @@ import br.ueg.acervodigital.controller.IItemController;
 import br.ueg.acervodigital.dto.list.ItemListDTO;
 import br.ueg.acervodigital.dto.request.ItemRequestDTO;
 import br.ueg.acervodigital.dto.response.ItemResponseDTO;
-import br.ueg.acervodigital.entities.Item;
 import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.service.impl.ItemService;
-import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudController;
-import br.ueg.acervodigitalarquitetura.mapper.GenericMapper;
+import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudFileController;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -22,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("${api.version}/item")
-public class ItemController extends AbstractCrudController<ItemRequestDTO, ItemResponseDTO, ItemListDTO, ItemService, Long>
+public class ItemController extends AbstractCrudFileController<ItemRequestDTO, ItemResponseDTO, ItemListDTO, ItemService, Long>
         implements IItemController {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
@@ -30,12 +28,18 @@ public class ItemController extends AbstractCrudController<ItemRequestDTO, ItemR
     @Autowired
     protected ItemMapper mapper;
 
+    @GetMapping("/list")
+    public ResponseEntity<List<ItemListDTO>> listAllWithoutRole(){
+        List<ItemListDTO> listDTO = service.listAll();
+        return ResponseEntity.ok(listDTO);
+    }
+
     @GetMapping(path = "/search/{description}")
     @Operation(description = "End point para obter dados por descrição")
     public ResponseEntity<List<ItemListDTO>> getByDescription(
             @PathVariable("description") String description
     ) {
-        List<ItemListDTO> modelList = mapper.fromModelToDTOList(service.getByDescription(description));
+        List<ItemListDTO> modelList = mapper.toDtoList(service.getByDescription(description));
         return ResponseEntity.of(
                 Optional.ofNullable(modelList)
         );

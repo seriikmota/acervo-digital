@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -46,11 +47,18 @@ public class Post implements GenericModel<Long> {
     private String content;
 
     @Column(name = "approval")
-    private String approval;
+    private Boolean approval;
 
     @Column(name = "publication_date")
-    private LocalDateTime publication_date;
+    private LocalDateTime publicationDate;
 
     @Column(name = "tag")
     private String tag;
+
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            mappedBy = "post"
+    )
+    private List<PostImage> images;
 }
