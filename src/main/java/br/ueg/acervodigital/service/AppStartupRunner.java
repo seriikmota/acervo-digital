@@ -1,8 +1,10 @@
 package br.ueg.acervodigital.service;
 
 import br.ueg.acervodigital.entities.Item;
+import br.ueg.acervodigital.entities.Post;
 import br.ueg.acervodigital.entities.User;
 import br.ueg.acervodigital.repository.ItemRepository;
+import br.ueg.acervodigital.repository.PostRepository;
 import br.ueg.acervodigital.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,9 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private PostRepository postRepository;
+    @Autowired
     private UserRepository userRepository;
 
     public void initDados() {
@@ -40,14 +45,17 @@ public class AppStartupRunner implements ApplicationRunner {
         User user = null;
         user = User.builder()
                 .id(1L)
-                .name("Fulano de Tal")
-                .email("fulano@email.com")
-                .password("$2a$10$C3qnT9kIFyyrAls.OS6NoOfpb9ny5.6hqHxIBPeL/w/xX4bv.feMy") // Senha123
+                .email("teste@gmail.com")
+                .enabled(Boolean.TRUE)
+                .function("Admin")
+                .login("admin")
+                .name("Administrador")
+                .password("$2y$10$1MgdNcIduZBhvlTym.PKje0nDX54UVS28jTa2U3lB3JvrqAj4fAdq") // Senha == admin
                 .build();
-//        this.userRepository.save(user);
+        this.userRepository.save(user);
         Item item = null;
         item = Item.builder()
-                .approval(1)
+                .approval(Boolean.FALSE)
                 .name("Osso do pé da cobra")
                 .collector("José das Couves")
                 .colleactionYear(LocalDate.parse("1980-01-01"))
@@ -61,7 +69,18 @@ public class AppStartupRunner implements ApplicationRunner {
                 .status(1)
                 .user(user)
                 .build();
-//        this.itemRepository.save(item);
+        this.itemRepository.save(item);
+        Post post = null;
+        post = Post.builder()
+                .tag("teste1;teste2;teste3")
+                .approval(Boolean.FALSE)
+                .content("Postagem de teste")
+                .title("Título Teste")
+                .subtitle("Subtitulo Teste")
+                .publicationDate(LocalDateTime.now())
+                .user(user)
+                .build();
+        this.postRepository.save(post);
         LOG.info("Finalizando a execução do método initDados()");
     }
 

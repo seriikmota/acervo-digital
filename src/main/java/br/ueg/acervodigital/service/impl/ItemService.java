@@ -34,12 +34,12 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
     }
 
     @Override
-    protected void prepareToUpdate(Item dataDB) {
+    protected void prepareToUpdate(Item data) {
 
     }
 
     @Override
-    protected void prepareToDelete(Item dataDB) {
+    protected void prepareToDelete(Item data) {
 
     }
 
