@@ -1,6 +1,7 @@
 package br.ueg.acervodigital.dto.request;
 
-import br.ueg.acervodigital.dto.list.ItemListDTO;
+import br.ueg.acervodigitalarquitetura.dto.DTOFile;
+import br.ueg.acervodigitalarquitetura.dto.FileDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemRequestDTO {
+public class ItemRequestDTO implements DTOFile {
     private Long id;
     private String numberCode;
     private String collector;
@@ -28,5 +29,5 @@ public class ItemRequestDTO {
     private String name;
     private String taxonomy;
     private LocalDate heritageDate;
-    private List<ItemListDTO> image;
+    private List<FileDTO> files;
 }

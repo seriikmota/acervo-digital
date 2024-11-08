@@ -7,8 +7,6 @@ import br.ueg.acervodigital.entities.Post;
 import br.ueg.acervodigitalarquitetura.mapper.GenericMapper;
 import org.mapstruct.*;
 
-import java.util.List;
-
 @Mapper(
         componentModel = "spring",
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
@@ -18,10 +16,4 @@ import java.util.List;
 public interface PostMapper extends GenericMapper<PostRequestDTO, PostResponseDTO, PostListDTO, Post, Long> {
     @Mapping(source = "files", target = "images")
     Post toModel(PostRequestDTO postRequestDTO);
-
-    @Named(value = "toDTOList")
-    PostListDTO toDTOList(Post model);
-
-    @IterableMapping(qualifiedByName = "toDTOList")
-    List<PostListDTO> fromModelToDTOList(List<Post> posts);
 }

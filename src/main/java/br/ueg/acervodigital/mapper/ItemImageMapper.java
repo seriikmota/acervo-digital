@@ -2,6 +2,7 @@ package br.ueg.acervodigital.mapper;
 
 import br.ueg.acervodigital.dto.ImageDTO;
 import br.ueg.acervodigital.entities.ItemImage;
+import br.ueg.acervodigitalarquitetura.dto.FileDTO;
 import org.mapstruct.*;
 
 import java.util.Base64;
@@ -13,17 +14,18 @@ import java.util.List;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface ItemImageMapper {
-    @Named(value = "toDTOList")
-    default ImageDTO toDTOList(ItemImage model) {
+    @Mapping(source = "file", target = "image")
+    ItemImage toModel(FileDTO fileDTO);
 
-        ImageDTO imageDTO = ImageDTO.builder()
+    @Named("toDTO")
+    default ImageDTO toDTO(ItemImage model) {
+
+        return ImageDTO.builder()
                 .id(model.getId())
                 .image(Base64.getEncoder().encodeToString(model.getImage()))
                 .build();
-
-        return imageDTO;
     }
 
-    @IterableMapping(qualifiedByName = "toDTOList")
-    List<ImageDTO> fromModelToDTOList(List<ItemImage> ItemImage);
+    @IterableMapping(qualifiedByName = "toDTO")
+    List<ImageDTO> fromModelListToDTOList(List<ItemImage> ItemImage);
 }

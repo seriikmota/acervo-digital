@@ -80,5 +80,5 @@ public class Item implements GenericModel<Long> {
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             mappedBy = "item")
-    private List<ItemImage> itemImages;
+    private List<ItemImage> images;
 }
