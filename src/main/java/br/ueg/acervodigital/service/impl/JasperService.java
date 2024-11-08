@@ -21,17 +21,13 @@ import java.util.HashMap;
 public class JasperService implements IJasperService {
 
     @Override
-    public byte[] generatePdf(String file, HashMap<String,Object> params, JRBeanCollectionDataSource dataSource) {
-        try {
-            Path currentRelativePath = Paths.get("");
-            String jasperFilePath = currentRelativePath.toAbsolutePath() + file;
-            params.putAll(this.getParamsPdfGeneral());
+    public byte[] generatePdf(String file, HashMap<String,Object> params, JRBeanCollectionDataSource dataSource) throws JRException {
+        Path currentRelativePath = Paths.get("");
+        String jasperFilePath = currentRelativePath.toAbsolutePath() + file;
+        params.putAll(this.getParamsPdfGeneral());
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperFilePath, params, dataSource);
-            return JasperExportManager.exportReportToPdf(jasperPrint);
-        } catch (JRException e) {
-            throw new RuntimeException(e);
-        }
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperFilePath, params, dataSource);
+        return JasperExportManager.exportReportToPdf(jasperPrint);
     }
 
     private HashMap<String, Object> getParamsPdfGeneral() {

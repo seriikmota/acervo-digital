@@ -22,7 +22,7 @@
 	<field name="collection" class="java.lang.String"/>
 	<field name="heritageDate" class="java.lang.String"/>
 	<field name="collector" class="java.lang.String"/>
-	<field name="image" class="java.io.InputStream"/>
+	<field name="imageMain" class="java.io.InputStream"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -113,8 +113,9 @@
 				<reportElement mode="Transparent" x="0" y="10" width="140" height="75" uuid="1fe7fce5-5236-4532-813d-2090c77339e6">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{imageMain} != null]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$F{image}]]></imageExpression>
+				<imageExpression><![CDATA[$F{imageMain}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="0" y="90" width="554" height="54" uuid="c0056233-8a40-48ab-8e43-0e093d0d44a8"/>

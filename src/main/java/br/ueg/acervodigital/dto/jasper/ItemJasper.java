@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import java.io.InputStream;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -24,5 +26,7 @@ public class ItemJasper {
     private String collection;
     private String heritageDate;
     private String collector;
-    private InputStream image;
+    private InputStream imageMain;
+    private String imagesPath;
+    private JRBeanCollectionDataSource images;
 }

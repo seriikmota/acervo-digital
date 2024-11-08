@@ -8,6 +8,7 @@ import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.service.impl.ItemService;
 import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudFileController;
 import io.swagger.v3.oas.annotations.Operation;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -46,7 +47,7 @@ public class ItemController extends AbstractCrudFileController<ItemRequestDTO, I
     }
 
     @GetMapping("/pdf")
-    public ResponseEntity<?> exportPdf(@RequestParam(name = "id", required = false) Long id) {
+    public ResponseEntity<?> exportPdf(@RequestParam(name = "id", required = false) Long id) throws JRException {
         byte[] pdf;
         if (id != null) {
             pdf = service.exportItemsPdf(id);

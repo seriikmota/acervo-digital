@@ -1,5 +1,6 @@
 package br.ueg.acervodigital.service.impl;
 
+import br.ueg.acervodigital.dto.jasper.ImageJasper;
 import br.ueg.acervodigital.dto.jasper.ItemJasper;
 import br.ueg.acervodigital.dto.list.ItemListDTO;
 import br.ueg.acervodigital.dto.request.ItemRequestDTO;
@@ -18,14 +19,13 @@ import br.ueg.acervodigitalarquitetura.exception.DataException;
 import br.ueg.acervodigitalarquitetura.security.impl.CredentialProvider;
 import br.ueg.acervodigitalarquitetura.service.impl.AbstractService;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,20 +79,20 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
     }
 
     @Override
-    public byte[] exportItemsPdf() {
+    public byte[] exportItemsPdf() throws JRException {
         String file = "/src/main/resources/jasper/AcervoCompleto.jasper";
         List<ItemJasper> itemsJasper = mountObjectsJasper(repository.findAll());
         return exportPdf(file, itemsJasper);
     }
 
     @Override
-    public byte[] exportItemsPdf(Long id) {
+    public byte[] exportItemsPdf(Long id) throws JRException {
         String file = "/src/main/resources/jasper/AcervoIndividual.jasper";
         List<ItemJasper> itemsJasper = mountObjectsJasper(List.of(this.validateIdModelExistsAndGet(id)));
         return exportPdf(file, itemsJasper);
     }
 
-    private byte[] exportPdf(String file, List<ItemJasper> itemsJasper) {
+    private byte[] exportPdf(String file, List<ItemJasper> itemsJasper) throws JRException {
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(itemsJasper);
         return jasperService.generatePdf(file, new HashMap<>(), dataSource);
     }
@@ -100,12 +100,10 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
     private List<ItemJasper> mountObjectsJasper(List<Item> items) {
         List<ItemJasper> itemsJasper = new ArrayList<>();
 
-        int count = 0;
         for (Item item : items) {
-            count++;
             ItemJasper itemJasper = ItemJasper.builder()
                     .id(item.getId())
-                    .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing.")
+                    .description(item.getDescription())
                     .numberCode(item.getNumberCode())
                     .name(item.getName())
                     .colleactionYear(Util.formatDateYear(item.getColleactionYear()))
@@ -116,21 +114,20 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
                     .collection(item.getCollection())
                     .heritageDate(Util.formatDateWithoutHour(item.getHeritageDate()))
                     .collector(item.getCollector())
-                    .taxonomy("taxonomy")
                     .build();
-            try {
-                if (count == 1) {
-                    itemJasper.setImage(Files.newInputStream(Path.of(Paths.get("").toAbsolutePath() + "/src/main/resources/images/fossil.jpg")));
-                } else if (count == 2) {
-                    itemJasper.setImage(Files.newInputStream(Path.of(Paths.get("").toAbsolutePath() + "/src/main/resources/images/fossil2.jpeg")));
-                } else if (count == 3) {
-                    itemJasper.setImage(Files.newInputStream(Path.of(Paths.get("").toAbsolutePath() + "/src/main/resources/images/fossil3.jpg")));
-                } else {
-                    itemJasper.setImage(Files.newInputStream(Path.of(Paths.get("").toAbsolutePath() + "/src/main/resources/images/fossil4.jpeg")));
-                    count = 0;
+
+            if (item.getImages() != null && !item.getImages().isEmpty()) {
+                itemJasper.setImageMain(new ByteArrayInputStream(item.getImages().get(0).getImage()));
+                if (item.getImages().size() != 1) {
+                    List<ImageJasper> imagesJasper = new ArrayList<>();
+                    for (ItemImage image : item.getImages()) {
+                        if (image.getId() != item.getImages().get(0).getId()) {
+                            imagesJasper.add(new ImageJasper(new ByteArrayInputStream(image.getImage())));
+                        }
+                    }
+                    itemJasper.setImages(new JRBeanCollectionDataSource(imagesJasper));
+                    itemJasper.setImagesPath("/src/main/resources/jasper/ItemImagem.jasper");
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
             itemsJasper.add(itemJasper);
         }

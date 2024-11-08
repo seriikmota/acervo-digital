@@ -27,6 +27,7 @@ public class ItemResponseDTO {
     private Boolean approval;
     private String name;
     private String taxonomy;
+    private String description;
     private LocalDate heritageDate;
     private List<ImageDTO> images;
 }

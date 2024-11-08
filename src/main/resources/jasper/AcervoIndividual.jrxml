@@ -22,7 +22,9 @@
 	<field name="collection" class="java.lang.String"/>
 	<field name="heritageDate" class="java.lang.String"/>
 	<field name="collector" class="java.lang.String"/>
-	<field name="image" class="java.io.InputStream"/>
+	<field name="imageMain" class="java.io.InputStream"/>
+	<field name="images" class="java.lang.Object"/>
+	<field name="imagesPath" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -101,9 +103,9 @@
 		</band>
 	</title>
 	<detail>
-		<band height="280" splitType="Stretch">
+		<band height="294" splitType="Stretch">
 			<rectangle>
-				<reportElement x="-20" y="0" width="595" height="279" backcolor="#EDEDED" uuid="310174e4-b366-444b-9d44-ae32de53e0a5">
+				<reportElement x="-20" y="0" width="595" height="294" backcolor="#EDEDED" uuid="310174e4-b366-444b-9d44-ae32de53e0a5">
 					<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></printWhenExpression>
 				</reportElement>
 				<graphicElement>
@@ -114,8 +116,9 @@
 				<reportElement mode="Transparent" x="0" y="10" width="130" height="130" uuid="1fe7fce5-5236-4532-813d-2090c77339e6">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{imageMain} != null]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$F{image}]]></imageExpression>
+				<imageExpression><![CDATA[$F{imageMain}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="142" y="10" width="90" height="32" uuid="a801dc16-0bbe-4035-a8b8-4245f4de06d7">
@@ -334,6 +337,40 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{collector}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="263" width="120" height="31" uuid="53cf123e-607e-4655-9245-437f9828dee9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{images} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Imagens Adicionais]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<rectangle>
+				<reportElement x="-20" y="0" width="595" height="20" backcolor="#EDEDED" uuid="03595fc8-647a-48e5-905f-58bfa93e3e2b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<subreport>
+				<reportElement x="7" y="0" width="540" height="20" uuid="4f42ccd4-38f9-4e3c-bd44-f68679fa5a1d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{images} != null]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="images">
+					<subreportParameterExpression><![CDATA[$F{images}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{images}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{imagesPath}]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<pageFooter>
