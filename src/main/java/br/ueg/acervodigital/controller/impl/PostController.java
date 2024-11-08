@@ -30,7 +30,7 @@ public class PostController extends AbstractCrudFileController<
     protected PostMapper mapper;
 
     @GetMapping(path = "/list")
-    public ResponseEntity<List<PostListDTO>> listAll() {
+    public ResponseEntity<List<PostListDTO>> listAllWithoutRole() {
         List<PostListDTO> listDTO = this.service.listAll();
         return ResponseEntity.ok(listDTO);
     }
@@ -40,7 +40,7 @@ public class PostController extends AbstractCrudFileController<
     public ResponseEntity<List<PostListDTO>> getPostByTag(
             @PathVariable("tag") String tag
     ) {
-        List<PostListDTO> modelList = mapper.fromModelToDTOList(service.getByTag(tag));
+        List<PostListDTO> modelList = mapper.toDtoList(service.getByTag(tag));
         return ResponseEntity.of(
                 Optional.ofNullable(modelList)
         );

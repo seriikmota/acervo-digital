@@ -17,17 +17,15 @@ public interface PostImageMapper {
     @Mapping(source = "file", target = "image")
     PostImage toModel(FileDTO fileDTO);
 
-    @Named(value = "toDTOList")
-    default ImageDTO toDTOList(PostImage model) {
+    @Named(value = "toDTO")
+    default ImageDTO toDTO(PostImage model) {
 
-        ImageDTO imageDTO = ImageDTO.builder()
+        return ImageDTO.builder()
                 .id(model.getId())
                 .image(Base64.getEncoder().encodeToString(model.getImage()))
                 .build();
-
-        return imageDTO;
     }
 
-    @IterableMapping(qualifiedByName = "toDTOList")
+    @IterableMapping(qualifiedByName = "toDTO")
     List<ImageDTO> fromModelToDTOList(List<PostImage> PostImage);
 }

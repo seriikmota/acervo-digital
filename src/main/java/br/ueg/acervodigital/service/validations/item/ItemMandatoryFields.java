@@ -14,7 +14,7 @@ public class ItemMandatoryFields implements IValidations<Item> {
             throw new BusinessRuleException("A descrição do item é obrigatória!");
         }
         if (!(data.getApproval() == null)) {
-            if (data.getApproval() == Boolean.TRUE && data.getItemImages().isEmpty()) {
+            if (data.getApproval() == Boolean.TRUE && data.getImages().isEmpty()) {
                 throw new BusinessRuleException("A imagem do item de acervo é obrigatória!");
             }
         }
