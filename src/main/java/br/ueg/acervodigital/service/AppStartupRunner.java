@@ -56,18 +56,20 @@ public class AppStartupRunner implements ApplicationRunner {
         Item item = null;
         item = Item.builder()
                 .approval(Boolean.FALSE)
-                .name("Osso do pé da cobra")
-                .collector("José das Couves")
+                .name("Esqueleto de Velociraptor")
+                .collector("Dr. Ana Mendes")
                 .colleactionYear(LocalDate.parse("1980-01-01"))
-                .collection("Cobras com pé")
+                .collection("Fósseis de Dinossauros")
                 .heritageDate(LocalDate.now())
-                .location("Logo ali")
-                .numberCode("00001")
-                .period("Pré-escolar")
-                .provenance("Onde o Judas perdeu as meias")
+                .location("Armário 01")
+                .numberCode("FOSSIL001")
+                .period("Cretáceo Superior")
+                .provenance("Deserto do Gobi, Mongólia")
                 .registerDate(LocalDate.now())
                 .status(1)
                 .user(user)
+                .description("Este espécime é um fósil de Ammonite bem preservado, datando do período Jurássico, aproximadamente 150 milhões de anos atrás. Apresenta uma concha espiralada com câmaras internas visíveis, mostrando belos detalhes de suturas em zigue-zague. A fossilização preservou uma estrutura mineralizada que realça padrões complexos, com tons de marrom e cinza devido à mineralização por calcita. O Ammonite foi coletado em uma formação sedimentar marinha, sugerindo um ambiente pré-histórico de recifes e mares rasos. Este item é uma peça importante para o estudo da evolução dos cefalópodes e das condições climáticas do passado.")
+                .taxonomy("Dromaeosauridae")
                 .build();
         this.itemRepository.save(item);
         Post post = null;

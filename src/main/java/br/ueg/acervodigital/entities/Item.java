@@ -70,6 +70,9 @@ public class Item implements GenericModel<Long> {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description", length = 1000)
+    private String description;
+
     @Column(name = "taxonomy")
     private String taxonomy;
 

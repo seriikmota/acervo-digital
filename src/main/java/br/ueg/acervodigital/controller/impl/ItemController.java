@@ -8,12 +8,13 @@ import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.service.impl.ItemService;
 import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudFileController;
 import io.swagger.v3.oas.annotations.Operation;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,5 +44,21 @@ public class ItemController extends AbstractCrudFileController<ItemRequestDTO, I
         return ResponseEntity.of(
                 Optional.ofNullable(modelList)
         );
+    }
+
+    @GetMapping("/pdf")
+    public ResponseEntity<?> exportPdf(@RequestParam(name = "id", required = false) Long id) throws JRException {
+        byte[] pdf;
+        if (id != null) {
+            pdf = service.exportItemsPdf(id);
+        } else {
+            pdf = service.exportItemsPdf();
+        }
+
+        String fileName = "AcervoDigital.pdf";
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .body(new ByteArrayResource(pdf));
     }
 }

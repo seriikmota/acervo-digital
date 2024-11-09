@@ -8,7 +8,8 @@ public enum ErrorEnum {
     CONFIRM_PASSWORD_NOT_ENTIRED(400, "Confirmação de senha não informada!"),
     PASSWORD_NOT_ENTIRED(400, "Senha não informada!"),
     PASSWORD_DIFERENT(400, "Ambas senhas estão diferentes!"),
-    PASSWORD_INVALID(400, "Senha inválida!");
+    PASSWORD_INVALID(400, "Senha inválida!"),
+    PDF_ERROR(400, "Erro ao exportar para pdf!"),;
 
     private final Integer id;
     private final String message;
