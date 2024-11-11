@@ -68,7 +68,12 @@ public class UserProviderService implements IUserProviderService {
                 "ROLE_ITEM_READ",
                 "ROLE_ITEM_UPDATE",
                 "ROLE_ITEM_DELETE",
-                "ROLE_ITEM_LISTALL"
+                "ROLE_ITEM_LISTALL",
+                "ROLE_POST_CREATE",
+                "ROLE_POST_READ",
+                "ROLE_POST_UPDATE",
+                "ROLE_POST_DELETE",
+                "ROLE_POST_LISTALL"
         );
     }
 

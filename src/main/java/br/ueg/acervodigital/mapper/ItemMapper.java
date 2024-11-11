@@ -11,17 +11,13 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import org.mapstruct.*;
 
-import java.util.List;
-
 @Mapper(
         componentModel = "spring",
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        uses = {ItemImageMapper.class}
 )
 public interface ItemMapper extends GenericMapper<ItemRequestDTO, ItemResponseDTO, ItemListDTO, Item, Long> {
-    @Named(value = "toDTOList") // para identificar o nome desse método pelo mapstruct
-    ItemListDTO toDTOList(Item model);
-
-    @IterableMapping(qualifiedByName = "toDTOList") // para orientar qual método utilizar no caso de vários target=source;
-    List<ItemListDTO> fromModelToDTOList(List<Item> items);
+    @Mapping(source = "files", target = "images")
+    Item toModel(ItemRequestDTO itemRequestDTO);
 }

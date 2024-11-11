@@ -6,7 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -65,14 +65,23 @@ public class Item implements GenericModel<Long> {
     private Integer status;
 
     @Column(name = "approval")
-    private Integer approval;
+    private Boolean approval;
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "description", length = 1000)
+    private String description;
 
     @Column(name = "taxonomy")
     private String taxonomy;
 
     @Column(name = "heritage_date")
     private LocalDate heritageDate; // Data do Tombamento
+
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            mappedBy = "item")
+    private List<ItemImage> images;
 }
