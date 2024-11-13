@@ -37,6 +37,9 @@ public class PostImage implements GenericModel<Long> {
     @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_post_id"))
     private Post post;
 
+    @Column(name = "content_type")
+    private String contentType;
+
     @Lob
     @Column(name = "image")
     private byte[] image;

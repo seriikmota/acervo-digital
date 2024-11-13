@@ -6,6 +6,7 @@ import br.ueg.acervodigital.dto.response.PostResponseDTO;
 import br.ueg.acervodigital.entities.Post;
 import br.ueg.acervodigital.entities.PostImage;
 import br.ueg.acervodigital.entities.User;
+import br.ueg.acervodigital.exception.BusinessRuleException;
 import br.ueg.acervodigital.mapper.PostMapper;
 import br.ueg.acervodigital.repository.PostRepository;
 import br.ueg.acervodigital.service.IPostService;
@@ -18,11 +19,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class PostService extends AbstractService<PostRequestDTO, PostResponseDTO, PostListDTO, Post, PostRepository, PostMapper, Long>
         implements IPostService {
+
+    private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpeg", "image/png");
 
     @Autowired
     private PostRepository repository;
@@ -30,11 +34,13 @@ public class PostService extends AbstractService<PostRequestDTO, PostResponseDTO
     @Override
     protected void prepareToCreate(Post data) {
         setUserAndPublicationDate(data);
+        verifyContentType(data);
     }
 
     @Override
     protected void prepareToUpdate(Post data) {
         setUserAndPublicationDate(data);
+        verifyContentType(data);
     }
 
     @Override
@@ -57,5 +63,14 @@ public class PostService extends AbstractService<PostRequestDTO, PostResponseDTO
             throw new DataException(ApiErrorEnum.NOT_FOUND);
         }
         return temp;
+    }
+
+    private static void verifyContentType(Post data) {
+        for (PostImage image : data.getImages()) {
+            String contentType = image.getContentType();
+            if (!ALLOWED_MIME_TYPES.contains(contentType)) {
+                throw new BusinessRuleException("Tipo de imagem não suportado: " + contentType);
+            }
+        }
     }
 }
