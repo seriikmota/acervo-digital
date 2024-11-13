@@ -39,6 +39,9 @@ public class ItemImage implements GenericModel<Long> {
     @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_item_id"))
     private Item item;
 
+    @Column(name = "content_type")
+    private String contentType;
+
     @Lob
     @Column(name = "image")
     private byte[] image;

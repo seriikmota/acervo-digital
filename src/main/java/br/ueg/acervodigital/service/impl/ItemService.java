@@ -8,6 +8,7 @@ import br.ueg.acervodigital.dto.response.ItemResponseDTO;
 import br.ueg.acervodigital.entities.Item;
 import br.ueg.acervodigital.entities.ItemImage;
 import br.ueg.acervodigital.entities.User;
+import br.ueg.acervodigital.exception.BusinessRuleException;
 import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.repository.ItemRepository;
 import br.ueg.acervodigital.service.IItemService;
@@ -18,21 +19,22 @@ import br.ueg.acervodigitalarquitetura.enums.ApiErrorEnum;
 import br.ueg.acervodigitalarquitetura.exception.DataException;
 import br.ueg.acervodigitalarquitetura.security.impl.CredentialProvider;
 import br.ueg.acervodigitalarquitetura.service.impl.AbstractService;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO, ItemListDTO, Item, ItemRepository, ItemMapper, Long>
         implements IItemService {
+
+    private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpeg", "image/png");
 
     @Autowired
     private ItemRepository repository;
@@ -43,11 +45,13 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
     @Override
     protected void prepareToCreate(Item data) {
         setUserCreate(data);
+        verifyContentType(data);
         updateItemImages(data);
     }
 
     @Override
     protected void prepareToUpdate(Item data) {
+        verifyContentType(data);
         updateItemImages(data);
     }
 
@@ -132,5 +136,14 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
             itemsJasper.add(itemJasper);
         }
         return itemsJasper;
+    }
+
+    private static void verifyContentType(Item data) {
+        for (ItemImage image : data.getImages()) {
+            String contentType = image.getContentType();
+            if (!ALLOWED_MIME_TYPES.contains(contentType)) {
+                throw new BusinessRuleException("Tipo de imagem não suportado: " + contentType);
+            }
+        }
     }
 }
