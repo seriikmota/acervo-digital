@@ -46,7 +46,7 @@ public class ItemController extends AbstractCrudFileController<ItemRequestDTO, I
         );
     }
 
-    @GetMapping("/pdf")
+    @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> exportPdf(@RequestParam(name = "id", required = false) Long id) throws JRException {
         byte[] pdf;
         if (id != null) {

@@ -9,6 +9,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -21,6 +22,8 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Table(name = "item_images")
 public class ItemImage implements GenericModel<Long> {
     public final static String SEQUENCE_NAME = "itemimages_sequence";
+
+    public static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpeg", "image/png");
 
     @Id
     @SequenceGenerator(
