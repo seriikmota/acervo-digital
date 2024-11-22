@@ -18,17 +18,14 @@ import br.ueg.acervodigitalarquitetura.enums.ApiErrorEnum;
 import br.ueg.acervodigitalarquitetura.exception.DataException;
 import br.ueg.acervodigitalarquitetura.security.impl.CredentialProvider;
 import br.ueg.acervodigitalarquitetura.service.impl.AbstractService;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO, ItemListDTO, Item, ItemRepository, ItemMapper, Long>
@@ -59,7 +56,7 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
     public List<Item> getByDescription(String description) {
         List<Item> temp = repository.findByNameContaining(description);
         if(temp.isEmpty()){
-            throw new DataException(ApiErrorEnum.NOT_FOUND);
+            throw new DataException(ApiErrorEnum.NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         return temp;
     }
@@ -121,7 +118,7 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
                 if (item.getImages().size() != 1) {
                     List<ImageJasper> imagesJasper = new ArrayList<>();
                     for (ItemImage image : item.getImages()) {
-                        if (image.getId() != item.getImages().get(0).getId()) {
+                        if (!Objects.equals(image.getId(), item.getImages().get(0).getId())) {
                             imagesJasper.add(new ImageJasper(new ByteArrayInputStream(image.getImage())));
                         }
                     }

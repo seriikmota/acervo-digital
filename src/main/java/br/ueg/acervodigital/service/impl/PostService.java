@@ -15,6 +15,7 @@ import br.ueg.acervodigitalarquitetura.exception.DataException;
 import br.ueg.acervodigitalarquitetura.security.impl.CredentialProvider;
 import br.ueg.acervodigitalarquitetura.service.impl.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -54,7 +55,7 @@ public class PostService extends AbstractService<PostRequestDTO, PostResponseDTO
     public List<Post> getByTag(String tag) {
         List<Post> temp = repository.findByTagContaining(tag);
         if(temp.isEmpty()){
-            throw new DataException(ApiErrorEnum.NOT_FOUND);
+            throw new DataException(ApiErrorEnum.NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         return temp;
     }
