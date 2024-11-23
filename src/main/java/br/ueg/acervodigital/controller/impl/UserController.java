@@ -6,7 +6,7 @@ import br.ueg.acervodigital.dto.request.UserRequestDTO;
 import br.ueg.acervodigital.dto.response.UserResponseDTO;
 import br.ueg.acervodigital.entities.UserLog;
 import br.ueg.acervodigital.service.impl.UserService;
-import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudController;
+import br.ueg.genericarchitecture.controller.impl.AbstractCrudController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

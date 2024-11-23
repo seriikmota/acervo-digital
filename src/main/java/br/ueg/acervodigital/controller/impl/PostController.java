@@ -6,7 +6,7 @@ import br.ueg.acervodigital.dto.request.PostRequestDTO;
 import br.ueg.acervodigital.dto.response.PostResponseDTO;
 import br.ueg.acervodigital.mapper.PostMapper;
 import br.ueg.acervodigital.service.impl.PostService;
-import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudFileController;
+import br.ueg.genericarchitecture.controller.impl.AbstractCrudFileController;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
