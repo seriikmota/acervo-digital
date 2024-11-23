@@ -1,7 +1,7 @@
 package br.ueg.acervodigital.dto.request;
 
-import br.ueg.acervodigitalarquitetura.dto.DTOFile;
-import br.ueg.acervodigitalarquitetura.dto.FileDTO;
+import br.ueg.genericarchitecture.dto.DTOFile;
+import br.ueg.genericarchitecture.dto.FileDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

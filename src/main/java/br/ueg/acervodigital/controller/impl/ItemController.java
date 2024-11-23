@@ -6,7 +6,7 @@ import br.ueg.acervodigital.dto.request.ItemRequestDTO;
 import br.ueg.acervodigital.dto.response.ItemResponseDTO;
 import br.ueg.acervodigital.mapper.ItemMapper;
 import br.ueg.acervodigital.service.impl.ItemService;
-import br.ueg.acervodigitalarquitetura.controller.impl.AbstractCrudFileController;
+import br.ueg.genericarchitecture.controller.impl.AbstractCrudFileController;
 import io.swagger.v3.oas.annotations.Operation;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
