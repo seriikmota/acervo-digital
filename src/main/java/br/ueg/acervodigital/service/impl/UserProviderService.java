@@ -64,6 +64,7 @@ public class UserProviderService implements IUserProviderService {
                 "ROLE_USER_UPDATE",
                 "ROLE_USER_DELETE",
                 "ROLE_USER_LISTALL",
+                "ROLE_USER_LOG_LISTALL",
                 "ROLE_ITEM_CREATE",
                 "ROLE_ITEM_READ",
                 "ROLE_ITEM_UPDATE",
@@ -79,14 +80,9 @@ public class UserProviderService implements IUserProviderService {
 
     private List<String> getRolesOfAssistant() {
         return Arrays.asList(
-                "ROLE_USER_CREATE",
-                "ROLE_USER_READ",
-                "ROLE_USER_UPDATE",
-                "ROLE_USER_DELETE",
                 "ROLE_ITEM_CREATE",
                 "ROLE_ITEM_READ",
-                "ROLE_ITEM_UPDATE",
-                "ROLE_ITEM_DELETE"
+                "ROLE_ITEM_UPDATE"
         );
     }
 
