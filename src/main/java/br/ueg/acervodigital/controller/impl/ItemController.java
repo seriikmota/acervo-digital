@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +32,8 @@ public class ItemController extends AbstractCrudFileController<ItemRequestDTO, I
     protected ItemMapper mapper;
 
     @GetMapping("/list")
-    public ResponseEntity<List<ItemListDTO>> listAllWithoutRole(){
-        List<ItemListDTO> listDTO = service.listAll();
+    public ResponseEntity<Page<ItemListDTO>> listAllWithoutRole(Pageable pageable){
+        Page<ItemListDTO> listDTO = service.listAll(pageable);
         return ResponseEntity.ok(listDTO);
     }
 

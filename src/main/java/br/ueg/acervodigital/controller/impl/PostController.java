@@ -9,11 +9,10 @@ import br.ueg.acervodigital.service.impl.PostService;
 import br.ueg.genericarchitecture.controller.impl.AbstractCrudFileController;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +29,8 @@ public class PostController extends AbstractCrudFileController<
     protected PostMapper mapper;
 
     @GetMapping(path = "/list")
-    public ResponseEntity<List<PostListDTO>> listAllWithoutRole() {
-        List<PostListDTO> listDTO = this.service.listAll();
+    public ResponseEntity<Page<PostListDTO>> listAllWithoutRole(Pageable pageable) {
+        Page<PostListDTO> listDTO = this.service.listAll(pageable);
         return ResponseEntity.ok(listDTO);
     }
 

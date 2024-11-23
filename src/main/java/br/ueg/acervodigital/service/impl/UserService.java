@@ -15,6 +15,8 @@ import br.ueg.genericarchitecture.exception.DataException;
 import br.ueg.genericarchitecture.exception.Message;
 import br.ueg.genericarchitecture.service.impl.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -92,7 +94,7 @@ public class UserService extends AbstractService<UserRequestDTO, UserResponseDTO
     }
 
     @Override
-    public List<UserLog> getLogUsers() {
-        return userLogRepository.findAll();
+    public Page<UserLog> getLogUsers(Pageable pageable) {
+        return userLogRepository.findAll(pageable);
     }
 }
