@@ -4,7 +4,9 @@ import br.ueg.acervodigital.controller.IUserController;
 import br.ueg.acervodigital.dto.list.UserListDTO;
 import br.ueg.acervodigital.dto.request.UserRequestDTO;
 import br.ueg.acervodigital.dto.response.UserResponseDTO;
+import br.ueg.acervodigital.entities.User;
 import br.ueg.acervodigital.entities.UserLog;
+import br.ueg.acervodigital.mapper.UserMapper;
 import br.ueg.acervodigital.service.impl.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("${api.version}/user")
-public class UserController extends AbstractCrudController<UserRequestDTO, UserResponseDTO, UserListDTO, UserService, Long>
+public class UserController extends AbstractCrudController<UserRequestDTO, UserResponseDTO, UserListDTO, User, UserService, UserMapper, Long>
         implements IUserController {
 
     @Autowired
