@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -40,7 +39,7 @@ public class UserProviderService implements IUserProviderService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .roles(roles)
-                .activeState(true)
+                .activeState(user.getEnabled())
                 .password(user.getPassword())
                 .build();
     }

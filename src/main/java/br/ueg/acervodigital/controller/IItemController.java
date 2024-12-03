@@ -8,10 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 public interface IItemController {
     ResponseEntity<Page<ItemListDTO>> listAllWithoutRole(Pageable pageable);
-    ResponseEntity<List<ItemListDTO>> getByDescription(@PathVariable("description") String description);
+    ResponseEntity<Page<ItemListDTO>> getByDescription(@PathVariable("description") String description, Pageable pageable);
     ResponseEntity<?> exportPdf(@RequestParam(name = "id", required = false) Long id) throws JRException;
 }

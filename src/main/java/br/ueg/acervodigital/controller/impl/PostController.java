@@ -6,6 +6,7 @@ import br.ueg.acervodigital.dto.request.PostRequestDTO;
 import br.ueg.acervodigital.dto.response.PostResponseDTO;
 import br.ueg.acervodigital.entities.Post;
 import br.ueg.acervodigital.mapper.PostMapper;
+import br.ueg.acervodigital.service.IPostService;
 import br.ueg.acervodigital.service.impl.PostService;
 import br.ueg.genericarchitecture.controller.impl.AbstractCrudFileController;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,24 +23,25 @@ import java.util.Optional;
 public class PostController extends AbstractCrudFileController<
         PostRequestDTO, PostResponseDTO, PostListDTO, Post, PostService, PostMapper, Long>
         implements IPostController {
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+
     @Autowired
-    protected PostService service;
+    protected IPostService service;
     @Autowired
     protected PostMapper mapper;
 
     @GetMapping(path = "/list")
     public ResponseEntity<Page<PostListDTO>> listAllWithoutRole(Pageable pageable) {
-        Page<PostListDTO> listDTO = this.service.listAll(pageable).map(obj -> mapper.toDTOList(obj));
+        Page<PostListDTO> listDTO = this.service.listAllWithoutRole(pageable).map(obj -> mapper.toDTOList(obj));
         return ResponseEntity.ok(listDTO);
     }
 
-    @GetMapping(path = "/post-search/{tag}")
+    @GetMapping(path = "/search/{tag}")
     @Operation(description = "End point para obter postagens por etiqueta")
-    public ResponseEntity<List<PostListDTO>> getPostByTag(
-            @PathVariable("tag") String tag
+    public ResponseEntity<Page<PostListDTO>> getPostByTag(
+            @PathVariable("tag") String tag,
+            Pageable pageable
     ) {
-        List<PostListDTO> modelList = mapper.toDtoList(service.getByTag(tag));
+        Page<PostListDTO> modelList = this.service.getByTag(tag, pageable).map(obj -> mapper.toDTOList(obj));
         return ResponseEntity.of(
                 Optional.ofNullable(modelList)
         );
