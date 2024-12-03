@@ -1,5 +1,6 @@
 package br.ueg.acervodigital.dto.response;
 
+import br.ueg.acervodigital.entities.UserGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,6 @@ public class UserResponseDTO {
     private String name;
     private String login;
     private String email;
-    private String function;
-    private boolean enabled;
+    private UserGroup userGroup;
+    private Boolean enabled;
 }

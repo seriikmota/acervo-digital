@@ -1,11 +1,11 @@
 package br.ueg.acervodigital.service;
 
-import br.ueg.acervodigital.entities.Item;
-import br.ueg.acervodigital.entities.Post;
-import br.ueg.acervodigital.entities.User;
+import br.ueg.acervodigital.entities.*;
 import br.ueg.acervodigital.repository.ItemRepository;
 import br.ueg.acervodigital.repository.PostRepository;
+import br.ueg.acervodigital.repository.UserGroupRepository;
 import br.ueg.acervodigital.repository.UserRepository;
+import br.ueg.acervodigital.service.impl.InitializerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class AppStartupRunner implements ApplicationRunner {
@@ -26,6 +30,8 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlAuto;
+    @Value("${initializer.password}")
+    private String initializerPassword;
 
     private static final Logger LOG = LoggerFactory.getLogger(AppStartupRunner.class);
 
@@ -35,6 +41,10 @@ public class AppStartupRunner implements ApplicationRunner {
     private PostRepository postRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserGroupRepository userGroupRepository;
+    @Autowired
+    private InitializerService initializerService;
 
     public void initDados() {
 
@@ -42,12 +52,18 @@ public class AppStartupRunner implements ApplicationRunner {
         if(!ddlAuto.equals(CREATE) && !ddlAuto.equals(CREATE_DROP)) {
             return;
         }
+
+        initializerService.initializerRoles(initializerPassword);
+
+        UserGroup userGroup = userGroupRepository.findByName("admin");
+
+
         User user = null;
         user = User.builder()
                 .id(1L)
                 .email("teste@gmail.com")
                 .enabled(Boolean.TRUE)
-                .function("Admin")
+                .userGroup(userGroup)
                 .login("admin")
                 .name("Administrador")
                 .password("$2y$10$1MgdNcIduZBhvlTym.PKje0nDX54UVS28jTa2U3lB3JvrqAj4fAdq") // Senha == admin
