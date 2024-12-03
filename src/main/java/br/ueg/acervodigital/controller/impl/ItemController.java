@@ -6,6 +6,7 @@ import br.ueg.acervodigital.dto.request.ItemRequestDTO;
 import br.ueg.acervodigital.dto.response.ItemResponseDTO;
 import br.ueg.acervodigital.entities.Item;
 import br.ueg.acervodigital.mapper.ItemMapper;
+import br.ueg.acervodigital.service.IItemService;
 import br.ueg.acervodigital.service.impl.ItemService;
 import br.ueg.genericarchitecture.controller.impl.AbstractCrudFileController;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,31 +20,31 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("${api.version}/item")
 public class ItemController extends AbstractCrudFileController<ItemRequestDTO, ItemResponseDTO, ItemListDTO, Item, ItemService, ItemMapper, Long>
         implements IItemController {
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+
     @Autowired
-    protected ItemService service;
+    protected IItemService service;
     @Autowired
     protected ItemMapper mapper;
 
     @GetMapping("/list")
     public ResponseEntity<Page<ItemListDTO>> listAllWithoutRole(Pageable pageable){
-        Page<ItemListDTO> listDTO = service.listAll(pageable).map(obj -> mapper.toDTOList(obj));
+        Page<ItemListDTO> listDTO = service.listAllWithoutRole(pageable).map(obj -> mapper.toDTOList(obj));
         return ResponseEntity.ok(listDTO);
     }
 
     @GetMapping(path = "/search/{description}")
     @Operation(description = "End point para obter dados por descrição")
-    public ResponseEntity<List<ItemListDTO>> getByDescription(
-            @PathVariable("description") String description
+    public ResponseEntity<Page<ItemListDTO>> getByDescription(
+            @PathVariable("description") String description,
+            Pageable pageable
     ) {
-        List<ItemListDTO> modelList = mapper.toDtoList(service.getByDescription(description));
+        Page<ItemListDTO> modelList = this.service.getByDescription(description, pageable).map(obj -> mapper.toDTOList(obj));
         return ResponseEntity.of(
                 Optional.ofNullable(modelList)
         );

@@ -21,6 +21,8 @@ import br.ueg.genericarchitecture.service.impl.AbstractService;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -53,8 +55,14 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
 
     }
 
-    public List<Item> getByDescription(String description) {
-        List<Item> temp = repository.findByNameContaining(description);
+    @Override
+    public Page<Item> listAllWithoutRole(Pageable pageable) {
+        return this.repository.findAllByApprovalTrue(pageable);
+    }
+
+    @Override
+    public Page<Item> getByDescription(String description, Pageable pageable) {
+        Page<Item> temp = repository.findByNameContaining(description, pageable);
         if(temp.isEmpty()){
             throw new DataException(ApiErrorEnum.NOT_FOUND, HttpStatus.NOT_FOUND);
         }
@@ -67,7 +75,7 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
         data.setUser(user);
     }
 
-    public void updateItemImages(Item data) {
+    private void updateItemImages(Item data) {
         if (data.getImages() != null) {
             for (ItemImage image : data.getImages()) {
                 image.setItem(data);

@@ -28,7 +28,9 @@ public class SecurityConfig extends ApiSecurityConfig {
         List<String> urls = new ArrayList<>();
         urls.add(apiBase.concat("/post/list"));
         urls.add(apiBase.concat("/item/list"));
+        urls.add(apiBase.concat("/item/search/**"));
         urls.add(apiBase.concat("/item/pdf"));
+        urls.add(apiBase.concat("/post/search/**"));
         return urls;
     }
 
