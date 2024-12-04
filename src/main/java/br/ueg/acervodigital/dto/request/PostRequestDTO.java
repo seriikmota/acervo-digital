@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -24,14 +23,11 @@ public class PostRequestDTO implements DTOFile {
     @MandatoryField(name = "subtitulo")
     private String subtitle;
 
-    @MandatoryField(name = "conteúdo")
+    @MandatoryField(name = "conteúdo", length = 10000)
     private String content;
 
     @MandatoryField(name = "aprovação")
     private Boolean approval;
-
-    @MandatoryField(name = "data de publicação")
-    private LocalDateTime publicationDate;
 
     @MandatoryField(name = "etiqueta")
     private String tag;

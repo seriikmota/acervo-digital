@@ -50,7 +50,7 @@ public class PostService extends AbstractService<PostRequestDTO, PostResponseDTO
         for (PostImage image : data.getImages()) {
             image.setPost(data);
         }
-        data.setPublicationDate(LocalDateTime.now());
+        data.setPublicationDate(data.getApproval() ? LocalDateTime.now() : null);
     }
 
     @Override
