@@ -35,6 +35,12 @@ public class PostController extends AbstractCrudFileController<
         return ResponseEntity.ok(listDTO);
     }
 
+    @GetMapping(path = {"view/{id}"})
+    public ResponseEntity<PostResponseDTO> viewPost(@PathVariable Long id) {
+        PostResponseDTO dtoResult = this.mapper.toDTO(this.service.getById(id));
+        return ResponseEntity.ok(dtoResult);
+    }
+
     @GetMapping(path = "/search/{tag}")
     @Operation(description = "End point para obter postagens por etiqueta")
     public ResponseEntity<Page<PostListDTO>> getPostByTag(

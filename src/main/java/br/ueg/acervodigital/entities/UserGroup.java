@@ -1,6 +1,7 @@
 package br.ueg.acervodigital.entities;
 
 import br.ueg.genericarchitecture.domain.GenericModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,5 +31,6 @@ public class UserGroup implements GenericModel<Long> {
             joinColumns = @JoinColumn(name = "user_group_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @JsonIgnore
     private List<Role> roles;
 }

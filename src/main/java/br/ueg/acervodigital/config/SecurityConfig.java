@@ -29,8 +29,10 @@ public class SecurityConfig extends ApiSecurityConfig {
         urls.add(apiBase.concat("/post/list"));
         urls.add(apiBase.concat("/item/list"));
         urls.add(apiBase.concat("/item/search/**"));
+        urls.add(apiBase.concat("/item/view/**"));
         urls.add(apiBase.concat("/item/pdf"));
         urls.add(apiBase.concat("/post/search/**"));
+        urls.add(apiBase.concat("/post/view/**"));
         return urls;
     }
 

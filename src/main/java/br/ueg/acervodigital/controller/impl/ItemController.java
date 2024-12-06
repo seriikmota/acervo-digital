@@ -38,6 +38,12 @@ public class ItemController extends AbstractCrudFileController<ItemRequestDTO, I
         return ResponseEntity.ok(listDTO);
     }
 
+    @GetMapping(path = {"view/{id}"})
+    public ResponseEntity<ItemResponseDTO> viewItem(@PathVariable Long id) {
+        ItemResponseDTO dtoResult = this.mapper.toDTO(this.service.getById(id));
+        return ResponseEntity.ok(dtoResult);
+    }
+
     @GetMapping(path = "/search/{description}")
     @Operation(description = "End point para obter dados por descrição")
     public ResponseEntity<Page<ItemListDTO>> getByDescription(
