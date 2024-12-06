@@ -13,7 +13,9 @@ public enum ErrorEnum implements MessageCode {
     PASSWORD_INVALID("M5", MessageType.ERROR),
     PDF_ERROR("M6", MessageType.ERROR),
     MANDATORY_FIELD("M7", MessageType.ERROR),
-    IMAGE_CONTENT_TYPE_INVALID("M8", MessageType.ERROR);
+    IMAGE_CONTENT_TYPE_INVALID("M8", MessageType.ERROR),
+    EMAIL_EXISTS("M9", MessageType.ERROR),
+    LOGIN_EXISTS("M10", MessageType.ERROR),;
 
     private final String code;
     private final MessageType type;

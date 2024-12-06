@@ -1,7 +1,10 @@
 package br.ueg.acervodigital.service.impl;
 
+import br.ueg.acervodigital.entities.Role;
 import br.ueg.acervodigital.entities.User;
+import br.ueg.acervodigital.entities.UserGroup;
 import br.ueg.acervodigital.entities.UserLog;
+import br.ueg.acervodigital.repository.UserGroupRepository;
 import br.ueg.acervodigital.repository.UserLogRepository;
 import br.ueg.acervodigital.repository.UserRepository;
 import br.ueg.genericarchitecture.dto.CredentialDTO;
@@ -13,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -23,22 +25,21 @@ public class UserProviderService implements IUserProviderService {
     private UserRepository repository;
 
     @Autowired
+    private UserGroupRepository userGroupRepository;
+
+    @Autowired
     private UserLogRepository userLogRepository;
 
     private CredentialDTO getCredential(User user) {
-        List<String> roles = new ArrayList<>();
-        if (user.getFunction().equals("Admin")) {
-            roles.addAll(getRolesOfAdmin());
-        } else if (user.getFunction().equals("Assistant")) {
-            roles.addAll(getRolesOfAssistant());
-        }
+        List<String> roles = this.getRolesOfUserGroup(user.getUserGroup().getId());
+
         return CredentialDTO.builder()
                 .login(user.getLogin())
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .roles(roles)
-                .activeState(true)
+                .activeState(user.getEnabled())
                 .password(user.getPassword())
                 .build();
     }
@@ -57,34 +58,15 @@ public class UserProviderService implements IUserProviderService {
         return getCredential(user);
     }
 
-    private List<String> getRolesOfAdmin() {
-        return Arrays.asList(
-                "ROLE_USER_CREATE",
-                "ROLE_USER_READ",
-                "ROLE_USER_UPDATE",
-                "ROLE_USER_DELETE",
-                "ROLE_USER_LISTALL",
-                "ROLE_USER_LOG_LISTALL",
-                "ROLE_ITEM_CREATE",
-                "ROLE_ITEM_READ",
-                "ROLE_ITEM_UPDATE",
-                "ROLE_ITEM_DELETE",
-                "ROLE_ITEM_LISTALL",
-                "ROLE_POST_CREATE",
-                "ROLE_POST_READ",
-                "ROLE_POST_UPDATE",
-                "ROLE_POST_DELETE",
-                "ROLE_POST_LISTALL",
-                "ROLE_POST_TABLE_ALL"
-        );
-    }
-
-    private List<String> getRolesOfAssistant() {
-        return Arrays.asList(
-                "ROLE_ITEM_CREATE",
-                "ROLE_ITEM_READ",
-                "ROLE_ITEM_UPDATE"
-        );
+    private List<String> getRolesOfUserGroup(Long groupUserId) {
+        UserGroup userGroup = userGroupRepository.findById(groupUserId).orElse(null);
+        List<String> roles = new ArrayList<>();
+        if (userGroup != null && userGroup.getRoles() != null) {
+            for (Role userGroupRole : userGroup.getRoles()) {
+                roles.add(userGroupRole.getRole());
+            }
+        }
+        return roles;
     }
 
     @Override

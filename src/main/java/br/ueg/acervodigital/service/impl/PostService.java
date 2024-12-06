@@ -15,11 +15,12 @@ import br.ueg.genericarchitecture.exception.DataException;
 import br.ueg.genericarchitecture.security.impl.CredentialProvider;
 import br.ueg.genericarchitecture.service.impl.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class PostService extends AbstractService<PostRequestDTO, PostResponseDTO, PostListDTO, Post, PostRepository, PostMapper, Long>
@@ -49,11 +50,17 @@ public class PostService extends AbstractService<PostRequestDTO, PostResponseDTO
         for (PostImage image : data.getImages()) {
             image.setPost(data);
         }
-        data.setPublicationDate(LocalDateTime.now());
+        data.setPublicationDate(data.getApproval() ? LocalDateTime.now() : null);
     }
 
-    public List<Post> getByTag(String tag) {
-        List<Post> temp = repository.findByTagContaining(tag);
+    @Override
+    public Page<Post> listAllWithoutRole(Pageable pageable) {
+        return repository.findAllByApprovalTrue(pageable);
+    }
+
+    @Override
+    public Page<Post> getByTag(String tag, Pageable pageable) {
+        Page<Post> temp = repository.findByTagContaining(tag, pageable);
         if(temp.isEmpty()){
             throw new DataException(ApiErrorEnum.NOT_FOUND, HttpStatus.NOT_FOUND);
         }

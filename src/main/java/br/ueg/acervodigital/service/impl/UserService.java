@@ -10,6 +10,7 @@ import br.ueg.acervodigital.mapper.UserMapper;
 import br.ueg.acervodigital.repository.UserLogRepository;
 import br.ueg.acervodigital.repository.UserRepository;
 import br.ueg.acervodigital.service.IUserService;
+import br.ueg.acervodigital.util.Util;
 import br.ueg.genericarchitecture.enums.ApiErrorEnum;
 import br.ueg.genericarchitecture.exception.DataException;
 import br.ueg.genericarchitecture.exception.Message;
@@ -18,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,11 +47,6 @@ public class UserService extends AbstractService<UserRequestDTO, UserResponseDTO
 
     }
 
-    private String encryptPassword(String password) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode(password);
-    }
-
     @Override
     protected void validateToMapCreate(UserRequestDTO dto, List<Message> messagesToThrow) {
         if (dto.getPassword() == null)
@@ -63,7 +58,7 @@ public class UserService extends AbstractService<UserRequestDTO, UserResponseDTO
         if (dto.getPassword().trim().length() < 8)
             messagesToThrow.add(new Message(ErrorEnum.PASSWORD_INVALID));
 
-        dto.setPassword(encryptPassword(dto.getPassword()));
+        dto.setPassword(Util.encryptPassword(dto.getPassword()));
     }
 
     @Override
@@ -76,7 +71,7 @@ public class UserService extends AbstractService<UserRequestDTO, UserResponseDTO
             if (dto.getPassword().trim().length() < 8)
                 messagesToThrow.add(new Message(ErrorEnum.PASSWORD_INVALID));
 
-            dto.setPassword(encryptPassword(dto.getPassword()));
+            dto.setPassword(Util.encryptPassword(dto.getPassword()));
         }
     }
 
@@ -90,7 +85,7 @@ public class UserService extends AbstractService<UserRequestDTO, UserResponseDTO
     @Override
     public boolean isUserEnabled(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new DataException(ApiErrorEnum.NOT_FOUND, HttpStatus.NOT_FOUND));
-        return user.isEnabled();
+        return user.getEnabled();
     }
 
     @Override

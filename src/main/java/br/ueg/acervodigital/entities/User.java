@@ -42,10 +42,11 @@ public class User implements GenericModel<Long> {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "function")
-    private String function;
-
     @Column(name = "enabled")
-    private boolean enabled;
+    private Boolean enabled;
+
+    @ManyToOne
+    @JoinColumn(name = "user_group_id", nullable = false)
+    private UserGroup userGroup;
 
 }

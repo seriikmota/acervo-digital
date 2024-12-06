@@ -1,13 +1,11 @@
 package br.ueg.acervodigital.dto.list;
 
-import br.ueg.acervodigital.dto.ImageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @SuperBuilder
@@ -29,5 +27,4 @@ public class ItemListDTO {
     private String name;
     private String taxonomy;
     private LocalDate heritageDate;
-    private List<ImageDTO> images;
 }
