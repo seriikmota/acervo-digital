@@ -54,7 +54,7 @@ public class ItemRequestDTO implements DTOFile {
     @MandatoryField(name = "taxonomia")
     private String taxonomy;
 
-    @MandatoryField(name = "descrição")
+    @MandatoryField(name = "descrição", length = 10000)
     private String description;
 
     @MandatoryField(name = "data de tombamento")
