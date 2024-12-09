@@ -16,6 +16,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Page<Item> findAllByApprovalTrue(Pageable pageable);
 
     @Query("select i from Item i where upper(i.name) like upper(concat('%',:name,'%')) and i.approval = true")
+    Page<Item> findByNameContainingAndApproval(@Param("name") String name, Pageable pageable);
+
+    @Query("select i from Item i where upper(i.name) like upper(concat('%',:name,'%'))")
     Page<Item> findByNameContaining(@Param("name") String name, Pageable pageable);
 
     @Query("select i from Item i where upper(i.description) like upper(concat('%',:description,'%'))")

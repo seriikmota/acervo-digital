@@ -14,8 +14,6 @@ import br.ueg.acervodigital.service.IItemService;
 import br.ueg.acervodigital.service.IJasperService;
 import br.ueg.acervodigital.util.Util;
 import br.ueg.genericarchitecture.dto.CredentialDTO;
-import br.ueg.genericarchitecture.enums.ApiErrorEnum;
-import br.ueg.genericarchitecture.exception.DataException;
 import br.ueg.genericarchitecture.security.impl.CredentialProvider;
 import br.ueg.genericarchitecture.service.impl.AbstractService;
 import net.sf.jasperreports.engine.JRException;
@@ -23,7 +21,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -62,9 +60,11 @@ public class ItemService extends AbstractService<ItemRequestDTO, ItemResponseDTO
 
     @Override
     public Page<Item> getByDescription(String description, Pageable pageable) {
-        Page<Item> temp = repository.findByNameContaining(description, pageable);
-        if(temp.isEmpty()){
-            throw new DataException(ApiErrorEnum.NOT_FOUND, HttpStatus.NOT_FOUND);
+        Page<Item> temp;
+        if (SecurityContextHolder.getContext().getAuthentication().getName().equalsIgnoreCase("anonymousUser")) {
+            temp = repository.findByNameContainingAndApproval(description, pageable);
+        } else {
+            temp = repository.findByNameContaining(description, pageable);
         }
         return temp;
     }
